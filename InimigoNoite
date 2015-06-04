@@ -1,0 +1,68 @@
+package{
+	
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.utils.Timer;
+	
+	public class InimigoNoite extends MovieClip{
+	
+		var speed:Number;
+		static var list:Array = new Array();
+		var balaTimer: Timer;
+		
+		function InimigoNoite(){
+			
+			list.push(this);
+			this.x = 1160;
+			this.y = 150 + (450-150) * Math.random();
+			speed = Math.random()*5 + 5;
+			addEventListener("enterFrame", enterFrame);
+			var intervalo: Number = Math.random()*500 + 1000;
+			balaTimer = new Timer(intervalo);
+			balaTimer.addEventListener("timer", bala);
+			balaTimer.start();
+			
+		}
+		
+		function enterFrame (e:Event){
+			
+			this.x -= speed;
+			if(this.x < -100){
+				matar();
+				return;
+			}
+			
+			if(this.hitTestObject(SpaceImpact.navecnoite)){
+				matar();
+			}
+		}
+			
+		function matar(){
+			
+				var explosao = new ExplosaoNoite();
+				stage.addChild(explosao);
+				explosao.x = this.x;
+				explosao.y = this.y;
+				
+				balaTimer.stop();
+				balaTimer.removeEventListener("timer",bala);
+				
+				removeEventListener("enterFrame", enterFrame);
+				stage.removeChild(this);
+				
+				for(var i in list){
+					if(list[i] == this){
+						delete list[i];
+					}
+				}
+			}
+			
+			function bala(e:Event){
+				
+				var b = new BalaInimigo();
+				b.x = this.x -50;
+				b.y = this.y;
+				stage.addChild(b);
+		}
+	}
+}
