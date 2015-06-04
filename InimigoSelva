@@ -1,0 +1,47 @@
+package{
+	
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	
+	public class InimigoSelva extends MovieClip{
+	
+		var speed:Number;
+		
+		function InimigoSelva(){
+			this.x = 1160;
+			this.y = 150 + (450 - 150) * Math.random(); // min + (max - min) * random
+			speed = 2;
+			
+			addEventListener("enterFrame", enterFrame);
+		}
+		
+		
+		function enterFrame(e:Event){
+			this.x -= speed;
+			//if(this.x < -100){
+				//trace("aaaaaaah3");
+				//destruir3();
+				//return;
+			//}
+		}
+		
+		function destruir3(){
+			var explosao3 = new Explosao();
+			trace("puff3");
+			stage.addChild(explosao3);
+			removeEventListener("enterFrame", enterFrame);
+			explosao3.x = this.x;
+			explosao3.y = this.y;
+			
+			for(var inimigos in SpaceImpact.InimigoS){
+				if(SpaceImpact.InimigoS[inimigos] === this){
+					this.x = -5000;
+					this.y = -5000;
+					SpaceImpact.InimigoS = SpaceImpact.InimigoS.splice (inimigos, inimigos-1);
+					break;
+				}
+			}
+		}
+		
+	}
+}
