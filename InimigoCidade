@@ -1,0 +1,54 @@
+package{
+	
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	
+	
+	public class InimigoCidade extends MovieClip{
+	
+		var speed:Number;
+		
+		function InimigoCidade(){
+			// coordenadas random do inimigo
+			this.x = 1160;
+			this.y = 150 + (450 - 150) * Math.random(); // min + (max - min) * random
+			speed = 2;
+			
+			addEventListener("enterFrame", enterFrame);
+		}
+		
+		
+		function enterFrame(e:Event){
+			this.x -= speed;
+			//remover inimigo quando este sai do ecrã
+			//if(this.x < -100){
+				//trace("aaaaaaah");
+				//destruir();
+				//return;
+			//}
+			//if(this.hitTestObject(SpaceImpact.navecnoite)){
+				//destruir();
+			//}
+		}
+		
+		// manda a explosao e destroi o inimigo que foi atingido
+		function destruir(){
+			var explosao = new Explosao();
+			trace("puff");
+			stage.addChild(explosao);
+			removeEventListener("enterFrame", enterFrame);
+			explosao.x = this.x;
+			explosao.y = this.y;
+			
+			for(var inimigo in SpaceImpact.InimigoC){
+				if(SpaceImpact.InimigoC[inimigo] === this){
+					this.x = -5000;
+					this.y = -5000;
+					SpaceImpact.InimigoC = SpaceImpact.InimigoC.splice (inimigo,inimigo-1);
+					break;
+				}
+			}
+		}
+	}
+	
+}
