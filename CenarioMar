@@ -1,0 +1,20 @@
+package{
+
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	
+	public class CenarioMar extends MovieClip{
+		
+		function CenarioMar(){
+			addEventListener("enterFrame", enterFrame);
+		}
+		
+		function enterFrame(e:Event){
+			this.x -= 2;
+			if(this.x < -6000){
+				this.x = 0;
+			}
+		}
+	}
+	
+}
