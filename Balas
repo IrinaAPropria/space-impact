@@ -1,0 +1,55 @@
+package{
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	
+	public class Balas extends MovieClip{
+		var nave;
+		var speed:Number;
+		
+		function Balas(e ){
+			nave = e;
+			speed = 20;
+			graphics.lineStyle(7,0xff0000);
+			graphics.moveTo(-2,0);
+			graphics.lineTo(2,0);
+			addEventListener("enterFrame", enterFrame);
+		}
+
+		function enterFrame(e:Event){
+
+			this.x += speed;
+			if(this.x > 1156){
+				removeEventListener("enterFrame", enterFrame);
+				nave.removeChild(this);
+				
+			}
+			
+			for(var inimigo in SpaceImpact.InimigoC){
+				if(this.hitTestObject(SpaceImpact.InimigoC[inimigo])){
+					removeEventListener("enterFrame", enterFrame);
+					nave.removeChild(this);
+					SpaceImpact.InimigoC[inimigo].destruir();
+					break;
+				}
+			}
+			
+			for(var inimigom in SpaceImpact.InimigoM){
+				if(this.hitTestObject(SpaceImpact.InimigoM[inimigom])){
+					removeEventListener("enterFrame", enterFrame);
+					nave.removeChild(this);
+					SpaceImpact.InimigoM[inimigom].destruir2();
+					break;
+				}
+			}
+			
+			for(var inimigos in SpaceImpact.InimigoS){
+				if(this.hitTestObject(SpaceImpact.InimigoS[inimigos])){
+					removeEventListener("enterFrame", enterFrame);
+					nave.removeChild(this);
+					SpaceImpact.InimigoS[inimigos].destruir3();
+					break;
+				}
+			}
+		}
+	}
+}
