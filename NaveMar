@@ -1,0 +1,58 @@
+package{
+
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.ui.Keyboard;
+	
+	public class Navecmar extends MovieClip{
+		
+		var velocidade:Number;
+		var limiteBalas: Number = 0;
+		
+		var minY:Number = 100; //Set to half the height of your stage
+		var maxY:Number = 460; //Set to your full stage height
+		var minX:Number = 50; //Set to half the height of your stage
+		var maxX:Number = 1050; //Set to your full stage height
+		
+		function Navecmar(){
+			velocidade = 10;
+			limiteBalas = 0;
+			addEventListener("enterFrame", move);
+		}
+		
+		function move(e:Event){
+			
+			limiteBalas += 1;
+			
+			if(Key.isDown(Keyboard.RIGHT)){
+				this.x = this.x + velocidade;
+			}
+			if(Key.isDown(Keyboard.LEFT)){
+				this.x = this.x - velocidade;
+			}
+			if(Key.isDown(Keyboard.UP)){
+				this.y = this.y - velocidade;
+			}
+			if(Key.isDown(Keyboard.DOWN)){
+				this.y = this.y + velocidade;
+			}
+			
+			if(Key.isDown(Keyboard.SPACE) && limiteBalas > 8){
+				limiteBalas = 0;
+				var b = new MovieClip();
+				b= new Balas(this);
+				b.x =  50;
+				b.y =  3;
+				this.addChild(b);
+			}
+			
+			if (this.y > maxY) this.y = maxY;
+			else if (this.y < minY) this.y = minY;
+			
+			if (this.x > maxX) this.x = maxX;
+			else if (this.x < minX) this.x = minX;
+		
+		} 
+	}
+	
+}
