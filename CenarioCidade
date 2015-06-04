@@ -1,0 +1,23 @@
+package{
+
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	
+	public class CenarioCidade extends MovieClip{
+		
+		function CenarioCidade(){
+			addEventListener("enterFrame", enterFrame);
+		}
+		
+		function enterFrame(e:Event){
+			this.x -= 2;
+			if(this.x < -6000){
+				this.x = 0;
+			}
+		}
+		
+		
+
+	}
+	
+}
